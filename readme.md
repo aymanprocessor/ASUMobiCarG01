@@ -6,8 +6,8 @@ we will make smart car that supports remote control from mobile
 <li>Ayman Mohamed Saad</li>
 <li>Ayman Badr Ahmed</li>
 <li>Hossam Wageh byomy</li>
-  <li></li>
-  <li></li>
+  <li>Ahmed Osama Mahmoud</li>
+  <li>Ali Mahmoud Ammar</li>
   <li></li>
   <li></li>
   <li></li>
