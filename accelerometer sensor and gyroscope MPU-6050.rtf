@@ -1,0 +1,239 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fmodern\fcharset0 CourierNewPSMT;\f1\fmodern\fcharset0 CourierNewPS-BoldMT;}
+{\colortbl;\red255\green255\blue255;\red135\green134\blue154;\red63\green142\blue200;\red154\green154\blue154;
+\red32\green80\blue126;\red17\green137\blue135;\red100\green100\blue100;\red194\green85\blue60;\red210\green0\blue53;
+\red14\green114\blue164;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{none\}}{\leveltext\leveltemplateid1\'00;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f0\fs24 \cf2 		\cf3 		\expnd0\expndtw0\kerning0
+#include "Wire.h" // This library allows you to communicate with I2C devices.
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs24 \cf5 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+const
+\f0\b0 \cf4  
+\f1\b \cf5 int
+\f0\b0 \cf4  MPU_ADDR = \cf6 0x68\cf4 ;\cf2  // I2C address of the MPU-6050. If AD0 pin is set to HIGH, the I2C address will be 0x69.
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+int16_t accelerometer_x, accelerometer_y, accelerometer_z;\cf2  // variables for accelerometer raw data
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+int16_t gyro_x, gyro_y, gyro_z;\cf2  // variables for gyro raw data
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+int16_t temperature;\cf2  // variables for temperature data
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs24 \cf5 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+char
+\f0\b0 \cf4  tmp_str\cf7 [\cf6 7\cf7 ]\cf4 ;\cf2  // temporary variable used in convert function
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs24 \cf5 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+char
+\f0\b0 \cf4 * \cf8 convert_int16_to_str\cf7 (\cf4 int16_t i\cf7 )\cf4  \cf7 \{\cf2  // converts int16 to string. Moreover, resulting strings will have the same length in the debug monitor.
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  \cf8 sprintf\cf7 (\cf4 tmp_str, \cf9 "%6d"\cf4 , i\cf7 )\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  
+\f1\b \cf5 return
+\f0\b0 \cf4  tmp_str;
+\fs22 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf7 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\}
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0\cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs24 \cf5 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+void
+\f0\b0 \cf4  \cf8 setup\cf7 ()\cf4  \cf7 \{
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 begin\cf7 (\cf6 9600\cf7 )\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 begin\cf7 ()\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 beginTransmission\cf7 (\cf4 MPU_ADDR\cf7 )\cf4 ;\cf2  // Begins a transmission to the I2C slave (GY-521 board)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 write\cf7 (\cf6 0x6B\cf7 )\cf4 ;\cf2  // PWR_MGMT_1 register
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 write\cf7 (\cf6 0\cf7 )\cf4 ;\cf2  // set to zero (wakes up the MPU-6050)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 endTransmission\cf7 (
+\f1\b \cf5 true
+\f0\b0 \cf7 )\cf4 ;
+\fs22 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf7 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\}
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\f1\b\fs24 \cf5 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+void
+\f0\b0 \cf4  \cf8 loop\cf7 ()\cf4  \cf7 \{
+\fs22 \cf4 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf4 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 beginTransmission\cf7 (\cf4 MPU_ADDR\cf7 )\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 write\cf7 (\cf6 0x3B\cf7 )\cf4 ;\cf2  // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 endTransmission\cf7 (
+\f1\b \cf5 false
+\f0\b0 \cf7 )\cf4 ;\cf2  // the parameter indicates that the Arduino will send a restart. As a result, the connection is kept active.
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Wire.\cf10 requestFrom\cf7 (\cf4 MPU_ADDR, \cf6 7\cf4 *\cf6 2\cf4 , 
+\f1\b \cf5 true
+\f0\b0 \cf7 )\cf4 ;\cf2  // request a total of 7*2=14 registers
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+ \cf2  // "Wire.read()<<8 | Wire.read();" means two registers are read and stored in the same variable
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  accelerometer_x = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  accelerometer_y = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x3D (ACCEL_YOUT_H) and 0x3E (ACCEL_YOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  accelerometer_z = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x3F (ACCEL_ZOUT_H) and 0x40 (ACCEL_ZOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  temperature = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x41 (TEMP_OUT_H) and 0x42 (TEMP_OUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  gyro_x = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x43 (GYRO_XOUT_H) and 0x44 (GYRO_XOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  gyro_y = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  gyro_z = Wire.\cf10 read\cf7 ()\cf4 <<\cf6 8\cf4  | Wire.\cf10 read\cf7 ()\cf4 ;\cf2  // reading registers: 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+ \cf2  // print out data
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 "aX = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 accelerometer_x\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | aY = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 accelerometer_y\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | aZ = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 accelerometer_z\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+ \cf2  // the following equation was taken from the documentation [MPU-6000/MPU-6050 Register Map and Description, p.30]
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | tmp = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf4 temperature/\cf6 340.00\cf4 +\cf6 36.53\cf7 )\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | gX = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 gyro_x\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | gY = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 gyro_y\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 print\cf7 (\cf9 " | gZ = "\cf7 )\cf4 ; Serial.\cf10 print\cf7 (\cf8 convert_int16_to_str\cf7 (\cf4 gyro_z\cf7 ))\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  Serial.\cf10 println\cf7 ()\cf4 ;
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  
+\fs22 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+ \cf2  // delay
+\fs22 \cf4 \
+\ls1\ilvl0
+\fs24 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+  \cf8 delay\cf7 (\cf6 1000\cf7 )\cf4 ;
+\fs22 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\parhyphenfactor20\partightenfactor0
+\ls1\ilvl0
+\fs24 \cf7 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+\}}
