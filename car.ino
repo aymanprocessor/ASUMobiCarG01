@@ -34,7 +34,7 @@ L298N motor1(EN1, IN1, IN2);
 L298N motor2(EN2, IN3, IN4);
 
 void forward1(int speed1) {
-  if (ultraMeasure() > 5) {
+  if (ultraMeasure() > 15) {
     motor1.setSpeed(speed1);
     motor2.setSpeed(speed1);
     motor1.forward();
@@ -83,7 +83,7 @@ void turnLeftFromCenter(int speed1) {
 }
 
 void forwardTurn(int right, int left) {
-  if (ultraMeasure() > 5) {
+  if (ultraMeasure() > 15) {
     motor1.setSpeed(right);
     motor2.setSpeed(left);
     motor1.forward();
@@ -285,28 +285,6 @@ void loop() {
 }
 
 
-void forward(int speed) {
 
-  motor1.setSpeed(speed);
-  motor2.setSpeed(speed);
-  motor1.forward();
-  motor2.forward();
-  Serial.print("motor speed = ");
-  Serial.println(  motor1.getSpeed());
-  Serial.print("speed = ");
-  Serial.println(speed);
-  Serial.println("-----------------------------------------------");
-  if (speed < 0) {
-    motor1.setSpeed(0);
-    motor2.setSpeed(0);
-    speed = 0;
-  }
-  if (speed > 255) {
-    motor1.setSpeed(255);
-    motor2.setSpeed(255);
-    speed = 255;
-  }
-  delay(500);
-}
 
 
