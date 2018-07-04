@@ -14,11 +14,10 @@ const int ledPin = 5;
 const int ldrPin = A0;
 const int buzzerPin = A1;
 
-const int trigPin = 6;
-const int echoPin = 7;
-const int ledPin = 5;
-const int ldrPin = A0;
-const int buzzerPin = A1;
+bool tone1_flag = true,led_flag = false;
+long duration;
+int distance;
+int ldrValue;
 
 unsigned long previousMillis = 0;        // will store last time
 const long interval = 500;           // interval at which to delay
@@ -167,7 +166,7 @@ void setup() {
   pinMode(sc, INPUT);
   pinMode(sr, INPUT);
   Serial.begin(9600);
-  Serial.setTimeout(10)
+  Serial.setTimeout(10);
   delay(3000); // wait for settings to take affect and voltage stabilize.
 }
 
@@ -276,9 +275,9 @@ int ControlMode() {
         tone1_flag = true;
       }
     }
-    Serial.print(ultraMeasure)
+    Serial.print(ultraMeasure());
     Serial.println(" cm");
-    Serial.println(ldrMeasure);
+    Serial.println(ldrMeasure());
   }
 }
 
@@ -385,7 +384,7 @@ int AccuracyMode() {
       index = Serial.parseInt();
 
     }
-    else if (in == '') { //for the shapes
+    else if (in == ' ') { //for the shapes
 
     }
   }
