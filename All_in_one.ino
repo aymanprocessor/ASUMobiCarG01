@@ -25,7 +25,7 @@ const long interval = 500;           // interval at which to delay
 static uint32_t tmp; // increment this
 int brightness = 0;
 int fadeAmount = 5;
-char in;long index=0;
+char in; long index = 0;
 int speed = 0;
 L298N motor1(EN1, IN1, IN2);
 L298N motor2(EN2, IN3, IN4);
@@ -359,33 +359,35 @@ int LineFollowerMode() {
   }
 }
 
-int AccuracyMode(){
-  if (Serial.available() > 0) { // check if anything in UART buffer
-    in = Serial.read();
-    delay(100);
-  }
-  Serial.println(in);
-  if (in == '0') {
+int AccuracyMode() {
+  while (1) {
+    if (Serial.available() > 0) { // check if anything in UART buffer
+      in = Serial.read();
+      delay(100);
+    }
+    Serial.println(in);
+    if (in == '0') {
       return 0;
     }
-  if (in=='a'){//a for posetive angel
-    index=Serial.parseInt();
-    
-  }
-  else if (in=='A'){//A for negative angel
-    index=Serial.parseInt();
-    
-  }
-  else if(in=='d'){//d for posetive distance
-    index=Serial.parseInt();
-    
-  }
-  else if(in=='D'){//D for negative distance
-    index=Serial.parseInt();
-    
-  }
-  else if (in == ''){//for the shapes
-    
+    if (in == 'a') { //a for posetive angel
+      index = Serial.parseInt();
+
+    }
+    else if (in == 'A') { //A for negative angel
+      index = Serial.parseInt();
+
+    }
+    else if (in == 'd') { //d for posetive distance
+      index = Serial.parseInt();
+
+    }
+    else if (in == 'D') { //D for negative distance
+      index = Serial.parseInt();
+
+    }
+    else if (in == '') { //for the shapes
+
+    }
   }
 }
 
